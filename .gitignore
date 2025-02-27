@@ -1,0 +1,28 @@
+# Maven
+target/
+!target/.gitkeep
+target/.*
+
+
+# Eclipse / IntelliJ IDEA
+.classpath
+.project
+.settings/
+
+# Logs e debug
+debug.log
+*.log
+
+# Arquivos temporários
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# Diretórios e arquivos gerados
+dependency-reduced-pom.xml
+javadoc-bundle-options/
+apidocs/
+
+jcef-bundle/
+

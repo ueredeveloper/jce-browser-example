@@ -1,0 +1,3 @@
+# Projeto de Leitura de um Browser JCEF
+
+Este projeto utiliza o Java Chromium Embedded Framework (JCEF) para renderizar páginas da web dentro de uma aplicação Java. Ele carrega arquivos `index.html`, `style.css` e `script.js` para exibir conteúdo interativo em um mapa. O JCEF permite a integração entre JavaScript e Java, possibilitando comunicação bidirecional entre a página e a aplicação JavaFX/Swing.
