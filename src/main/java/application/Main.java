@@ -12,7 +12,9 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URL;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.cef.CefApp;
@@ -21,14 +23,21 @@ import org.cef.CefClient;
 import org.cef.browser.CefBrowser;
 import org.cef.browser.CefFrame;
 import org.cef.browser.CefMessageRouter;
+import org.cef.callback.CefQueryCallback;
 import org.cef.handler.CefDisplayHandlerAdapter;
 import org.cef.handler.CefFocusHandlerAdapter;
+import org.cef.handler.CefMessageRouterHandlerAdapter;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import me.friwi.jcefmaven.CefAppBuilder;
 import me.friwi.jcefmaven.CefInitializationException;
 import me.friwi.jcefmaven.MavenCefAppHandlerAdapter;
 import me.friwi.jcefmaven.UnsupportedPlatformException;
 import service.HttpServer;
+
+
 
 /**
  * This is a simple example application using JCEF. It displays a JFrame with a
@@ -109,10 +118,6 @@ public class Main extends JFrame {
 		// of how to use these handlers.
 		client_ = cefApp_.createClient();
 
-		// (3) Create a simple message router to receive messages from CEF.
-		CefMessageRouter msgRouter = CefMessageRouter.create();
-		client_.addMessageRouter(msgRouter);
-
 		// (4) One CefBrowser instance is responsible to control what you'll see on
 		// the UI component of the instance. It can be displayed off-screen
 		// rendered or windowed rendered. To get an instance of CefBrowser you
@@ -168,6 +173,27 @@ public class Main extends JFrame {
 			}
 		});
 
+		JButton zoomInButton = new JButton("Zoom In");
+		JButton zoomOutButton = new JButton("Zoom Out");
+
+		// Panel to hold buttons
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(zoomInButton);
+		buttonPanel.add(zoomOutButton);
+
+		// Add the panel to the UI
+		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+
+		// Action Listeners for Zoom In
+		zoomInButton.addActionListener(e -> {
+			browser_.executeJavaScript("setZoomIn();", browser_.getURL(), 0);
+		});
+
+		// Action Listeners for Zoom Out
+		zoomOutButton.addActionListener(e -> {
+			browser_.executeJavaScript("setZoomOut();", browser_.getURL(), 0);
+		});
+
 		// Clear focus from the address field when the browser gains focus.
 		client_.addFocusHandler(new CefFocusHandlerAdapter() {
 			@Override
@@ -203,6 +229,48 @@ public class Main extends JFrame {
 				dispose();
 			}
 		});
+
+		// (3) Create a simple message router to receive messages from CEF.
+		CefMessageRouter msgRouter = CefMessageRouter.create();
+		msgRouter.addHandler(new MessageRouterHandler(), true);
+		browser_.getClient().addMessageRouter(msgRouter);
+
+		/*
+		 * msgRouter.addHandler(new CefMessageRouterHandlerAdapter() {
+		 * 
+		 * @SuppressWarnings("unused") public boolean onQuery(CefBrowser browser, long
+		 * queryId, String request, boolean persistent, CefQueryCallback callback) {
+		 * System.out.println("Received request: " + request);
+		 * 
+		 * try { JsonObject jsonRequest = new Gson().fromJson(request,
+		 * JsonObject.class); String action = jsonRequest.has("action") ?
+		 * jsonRequest.get("action").getAsString() : "";
+		 * 
+		 * System.out.println("Parsed action: " + action);
+		 * 
+		 * switch (action) { case "getData": JsonObject response = new JsonObject();
+		 * response.addProperty("message", "Data received successfully!");
+		 * callback.success(response.toString()); return true;
+		 * 
+		 * case "setData": String lat = jsonRequest.has("latitude") ?
+		 * jsonRequest.get("latitude").getAsString() : ""; String lng =
+		 * jsonRequest.has("longitude") ? jsonRequest.get("longitude").getAsString() :
+		 * "";
+		 * 
+		 * System.out.println("Received coordinates: Lat=" + lat + ", Lng=" + lng);
+		 * callback.success("{\"status\":\"success\"}"); return true;
+		 * 
+		 * default: callback.failure(404, "Unknown action"); return false; } } catch
+		 * (Exception e) { e.printStackTrace(); callback.failure(500,
+		 * "Internal Server Error"); return false; } }
+		 * 
+		 * }, true);
+		 * 
+		 * client_.addMessageRouter(msgRouter);
+		 */
+
+		// client_.addMessageRouter(msgRouter);
+
 	}
 
 	public static void main(String[] args)
@@ -222,7 +290,34 @@ public class Main extends JFrame {
 		System.out.println("Loading: " + url);
 
 		new Main(url, useOsr, false, args);
+		
+		for (java.lang.reflect.Method method : CefMessageRouterHandlerAdapter.class.getMethods()) {
+		    System.out.println(method);
+		}
 
+	}
+
+}
+
+class MessageRouterHandler extends CefMessageRouterHandlerAdapter {
+	
+	@Override
+	public boolean onQuery(
+	    CefBrowser browser, 
+	    CefFrame frame,  // <-- Add this parameter
+	    long query_id, 
+	    String request, 
+	    boolean persistent, 
+	    CefQueryCallback callback) {
+		
+		Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(request, JsonObject.class);
+        
+        System.out.println(jsonObject);
+	    
+	    System.out.println("Received request: " + request);
+	    callback.success("Response from Java");
+	    return true;
 	}
 
 }

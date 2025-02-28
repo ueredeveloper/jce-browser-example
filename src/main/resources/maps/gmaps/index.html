@@ -14,28 +14,7 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly"
 		defer></script>
 		
-		<script>
-		window.onload = function() {
-            console.log("Window onload disparado.");
-            const canvas = document.createElement("canvas");
-            const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-            if (gl) {
-                console.log("WebGL está disponível.");
-                if (typeof sendWebgldInfo === 'function') {
-                    sendWebgldInfo("WebGL está disponível.");
-                } else {
-                    console.log("sendWebgldInfo não está disponível ainda.");
-                }
-            } else {
-                console.log("WebGL NÃO está disponível.");
-                if (typeof sendWebgldInfo === 'function') {
-                    sendWebgldInfo("WebGL NÃO está disponível.");
-                } else {
-                    console.log("sendWebgldInfo não está disponível ainda.");
-                }
-            }
-        };
-        </script>
+		
 	
 </body>
 </html>
