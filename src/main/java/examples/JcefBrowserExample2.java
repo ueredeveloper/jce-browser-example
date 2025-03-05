@@ -1,4 +1,4 @@
-package application;
+package examples;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -28,11 +28,11 @@ import service.HttpServer;
 
 // PRINCIPAL, TRABALHAR SEGUNDA 28/02/2025
 
-public class MyMap extends JFrame {
+public class JcefBrowserExample2 extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public MyMap() {
+	public JcefBrowserExample2() {
 
 		setTitle("JCEF SwingNode Example");
 		setSize(1200, 700);
@@ -133,6 +133,6 @@ public class MyMap extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(MyMap::new);
+		SwingUtilities.invokeLater(JcefBrowserExample2::new);
 	}
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="apMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane fx:id="apMap" layoutY="13.0" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" />
+      <AnchorPane fx:id="apContent" layoutX="300.0" layoutY="13.0" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+      <AnchorPane layoutX="14.0" layoutY="7.0" prefHeight="40.0" prefWidth="600.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Button fx:id="btnMap" layoutX="489.0" layoutY="8.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="mapa" AnchorPane.rightAnchor="20.0" />
+            <Button fx:id="btnContent" layoutX="386.0" layoutY="8.0" mnemonicParsing="false" text="documento" AnchorPane.rightAnchor="120.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

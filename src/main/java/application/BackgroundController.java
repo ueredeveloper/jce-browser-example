@@ -16,12 +16,12 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import map.MyBrowser;
 
-public class Main extends JFrame {
+public class BackgroundController extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFXPanel jfxPanel;
 
-	public Main() {
+	public BackgroundController() {
 
 		setExtendedState(JFrame.MAXIMIZED_BOTH); // ✅ Fullscreen
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,11 +42,14 @@ public class Main extends JFrame {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = screenSize.width;
 		int height = screenSize.height;
-		int controlWidth = 300; // ✅ Fixed width for controls
+		int controlWidth = (int) (width*0.7); 
+		
+		int mapWidth = width - controlWidth;
+		int mapHeight = height-90;
 
 		// Set bounds
-		mapPanel.setBounds(0, 0, width - controlWidth, height);
-		mapPanel.add(new MyBrowser(width, height).getBrowserComponent());
+		mapPanel.setBounds(0, 0, mapWidth, height);
+		mapPanel.add(new MyBrowser(mapWidth, mapHeight ).getBrowserComponent());
 		jfxPanel.setBounds(width - controlWidth, 0, controlWidth, height);
 
 		// Add both layers
@@ -76,7 +79,5 @@ public class Main extends JFrame {
 		jfxPanel.setScene(scene);
 	}
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(Main::new);
-	}
+	
 }
